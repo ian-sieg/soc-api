@@ -30,7 +30,7 @@ module.exports = {
         .then((userData) =>
             !userData
                 ? res.status(404).json({message: 'No user with that ID'})
-                : res.json(user)
+                : res.json(userData)
         )
         .catch((err) => res.status(500).json(err))
     },
