@@ -53,8 +53,13 @@ module.exports = {
         .then((userData) =>
             !userData
                 ? res.status(404).json({message: 'No user with that ID'})
-                : res.json(userData)
+                : User.findOneAndUpdate(
+                    {_id: req.params.friendId},
+                    {$addToSet: {friends: req.params.userId}},
+                    {runValidators: true, new: true}
+                )
         )
+        .then(() => res.json({message: `${req.params.userId} and ${req.params.friendId} are now friends!`}))
         .catch((err) => res.status(500).json(err))
     },
     deleteFriend(req, res) {
